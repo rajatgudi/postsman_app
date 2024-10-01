@@ -39,6 +39,6 @@ export const sideBarIcons: sideBarIconsTypes[] = [
     Icon: PiUserDuotone,
     label: "Profile",
     route: "/profile",
-    imgUrl: "",
+    imgUrl: "s",
   },
 ];
