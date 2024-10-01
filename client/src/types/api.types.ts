@@ -28,14 +28,14 @@ export type SignUpResponseType = {
   __v: number;
 };
 export interface Root {
-  user: User
-  accessToken: string
-  refreshToken: string
+  user: User;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface User {
-  id: string
-  email: string
+  id: string;
+  email: string;
 }
 
 export type GetUsersResponseType = GetUserResponse[];
@@ -45,6 +45,16 @@ export type GetUserResponse = {
   name: string;
   email: string;
   password: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export type GetCurrentUserResponse = {
+  _id: string;
+  name: string;
+  email: string;
+  username: string;
   createdAt: string;
   updatedAt: string;
   __v: number;

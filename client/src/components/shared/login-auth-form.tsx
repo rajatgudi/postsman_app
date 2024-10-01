@@ -3,19 +3,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/authContext";
-import { useLoginMutation } from "@/state/api";
+import { useLazyGetCurrentUserQuery, useLoginMutation } from "@/state/api";
 import { LoginSchema, LoginType } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { PiSpinner } from "react-icons/pi";
 import { toast } from "sonner";
 const LoginForm = () => {
-  const { login } = useAuth();
+  const { login, setUsers } = useAuth();
   const [triggerLogin, { isLoading }] = useLoginMutation();
+  const [fetchCurrentUser] = useLazyGetCurrentUserQuery();
   async function handleLogin(values: LoginType) {
     console.log("data", values);
     const loginres = await triggerLogin(values);
-    console.log(loginres)
+    console.log(loginres);
     if (loginres?.error) {
       //@ts-expect-error erere
       toast.error(loginres?.error?.data?.message, { position: "top-right" });
@@ -23,6 +24,10 @@ const LoginForm = () => {
     if (loginres?.data) {
       toast.success("Login successful!", { position: "top-right" });
       login?.(loginres?.data?.accessToken);
+      const userResult = await fetchCurrentUser();
+      if (userResult?.data) {
+        setUsers?.(userResult?.data);
+      }
     }
   }
   const {

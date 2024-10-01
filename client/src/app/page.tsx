@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 export default function Home() {
   const { setTheme } = useTheme();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
   const { isDarkMode } = useAppSelector((state) => state.global);
   const router = useRouter();
   useEffect(() => {
@@ -28,6 +28,7 @@ export default function Home() {
       {isAuthenticated ? (
         <AuthWrapper>
           <div>
+            {user && <> USER: {user?.name}</>}
             Dashboard: {isDarkMode ? "Darkmode" : "Lightmode"}
             <div>{isAuthenticated ? "isAuthenticated" : "NO"}</div>
             <div>

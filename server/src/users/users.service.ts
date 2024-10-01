@@ -196,7 +196,12 @@ export class UsersService {
     }
   }
   async getCurrentUser(user: any) {
-    const users = await this.userModel.findById(user?.id);
+    //not displaying password field
+    const users = await this.userModel.findById(user?.id, {
+      password: 0,
+      likedPosts: 0,
+      bookmarkedPosts: 0,
+    });
     if (!user) {
       throw new NotFoundException(`User with id ${user?.id} not found!`);
     }

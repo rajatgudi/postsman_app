@@ -1,5 +1,6 @@
 "use client";
 import logo from "@/assets/images/logo.png";
+import UserAuthForm from "@/components/shared/user-auth-form";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/authContext";
 import { EnumAuthTypes } from "@/enums";
@@ -9,21 +10,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { PiGithubLogo } from "react-icons/pi";
-import UserAuthForm from "@/components/shared/user-auth-form";
 const Page = () => {
   const router = useRouter();
-  const { setTheme, theme } = useTheme();
+  const { setTheme } = useTheme();
   const { isAuthenticated } = useAuth();
-
+  console.log("isAuthenticated", isAuthenticated);
   useEffect(() => {
     setTheme("light");
   }, [setTheme]);
+
   useEffect(() => {
     if (isAuthenticated) {
       router.push("/");
     }
   }, [isAuthenticated, router]);
-  console.log("theme", theme);
   return (
     <>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

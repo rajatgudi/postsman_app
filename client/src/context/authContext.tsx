@@ -1,13 +1,14 @@
 "use client";
-import { LoginResponseType } from "@/types/api.types";
+import { GetCurrentUserResponse } from "@/types/api.types";
 import React, { createContext, useContext } from "react";
 type AuthState =
   | {
       isAuthenticated?: boolean | undefined;
       token?: string;
-      user?: LoginResponseType;
+      user?: GetCurrentUserResponse;
       login?: (token: string) => void;
       logout?: () => void;
+      setUsers?: (user: GetCurrentUserResponse) => void;
     }
   | undefined;
 
@@ -19,7 +20,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [authState, setAuthState] = React.useState<AuthState>({
     isAuthenticated: false,
   });
-
+  const setUsers = (user?: GetCurrentUserResponse) => {
+    if (user) {
+      setAuthState((prev) => ({
+        ...prev,
+        user: user || null,
+      }));
+    }
+  };
   const login = (token?: string) => {
     if (token) {
       localStorage.setItem("token", token);
@@ -40,7 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <AuthContext.Provider value={{ ...authState, login, logout }}>
+    <AuthContext.Provider value={{ ...authState, login, logout, setUsers }}>
       {children}
     </AuthContext.Provider>
   );
