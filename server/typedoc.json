@@ -1,0 +1,12 @@
+{
+  "entryPoints": ["src/**/*.ts"],
+  "out": "docs",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "excludeNotDocumented": false,
+  "readme": "README.md",
+  "name": "MyApp",
+  "plugin": []
+}
